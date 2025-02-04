@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import { useState, useEffect } from "react";
 import {
     Box,
     Tabs,
@@ -97,7 +97,7 @@ const MealTabs = () => {
     return (
         <Box>
             <Box sx={{ width: '100%', paddingX: "100px", bgcolor: 'background.paper', mt: 2, display: "flex", alignItems: "center", justifyContent: "center" }}>
-                <Tabs value={activeTab} onChange={(e, newValue) => setActiveTab(newValue)} centered variant="scrollable" scrollButtons="auto">
+                <Tabs value={activeTab} onChange={(_e, newValue) => setActiveTab(newValue)} centered variant="scrollable" scrollButtons="auto">
                     <Tab label="All Meals" />
                     <Tab label="Week 1" />
                     <Tab label="Week 2" />
