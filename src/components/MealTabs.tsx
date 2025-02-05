@@ -95,9 +95,9 @@ const MealTabs = () => {
     };
 
     return (
-        <Box>
+        <Box sx={{}}>
             <Box sx={{ width: '100%', paddingX: "100px", bgcolor: 'background.paper', mt: 2, display: "flex", alignItems: "center", justifyContent: "center" }}>
-                <Tabs value={activeTab} onChange={(_e, newValue) => setActiveTab(newValue)} centered variant="scrollable" scrollButtons="auto">
+                <Tabs value={activeTab} onChange={(_e, newValue) => setActiveTab(newValue)}  variant="scrollable" scrollButtons="auto">
                     <Tab label="All Meals" />
                     <Tab label="Week 1" />
                     <Tab label="Week 2" />
@@ -110,16 +110,27 @@ const MealTabs = () => {
             {isError && <Typography color="error">Failed to load meals. Try again later.</Typography>}
 
             {activeTab === 0 && meals && (
-                <Grid container spacing={2} sx={{ mt: 2, px: 2 }}>
+                <Grid container spacing={6} sx={{ mt: 2, px: 8, background: "linear-gradient(90deg, rgba(255,255,255,1) 0%, rgba(231,231,231,1) 100%)", }}>
                     {meals.map((meal: any) => (
-                        <Grid item xs={12} sm={6} md={4} lg={3} key={meal.id}>
-                            <Card sx={{ position: "relative" }}>
-                                <CardMedia component="img" height="140" image={meal.image} alt={meal.name} />
+                        <Grid item xs={12} sm={6} md={4} lg={4} key={meal.id} >
+                            <Card sx={{ position: "relative", padding: "20px", borderRadius: "20px" }} >
+                                <CardMedia className="rounded-lg" component="img" height="140" image={meal.image} alt={meal.name} />
                                 <CardContent>
-                                    <Typography variant="h6">{meal.name}</Typography>
-                                    <Typography variant="body2" color="text.secondary">{meal.description}</Typography>
+                                    <h2 className="text-xl font-bold mt-3">{meal.name}</h2>
+                                    <p color="text.secondary" className=" mt-4">{meal.instructions.join(" ").slice(0, 300)}...</p>
 
-                                    <IconButton sx={{ color: "black", position: "absolute", top: 8, right: 8 }} onClick={(e) => handleMenuOpen(e, meal)}>
+                                    <div className="flex items-center justify-between w-full mt-3">
+                                        <div className="flex items-center gap-2">
+                                            <span className="font-semibold">Cuisine:</span>
+                                            <span>{meal.cuisine}</span>
+                                        </div>
+                                        <div className="flex items-center gap-2">
+                                            <span className="font-semibold">Ratings:</span>
+                                            <span>{meal.rating}</span>
+                                        </div>
+                                    </div>
+
+                                    <IconButton sx={{ color: "black", position: "absolute", top: 10, right: 0, padding: 0 }} onClick={(e) => handleMenuOpen(e, meal)}>
                                         <MoreVertIcon />
                                     </IconButton>
 
@@ -134,17 +145,29 @@ const MealTabs = () => {
             )}
 
             {activeTab !== 0 && (
-                <Grid container spacing={2} sx={{ mt: 2, px: 2 }}>
+                <Grid container spacing={2} sx={{ mt: 2, px: 8, background: "linear-gradient(90deg, rgba(255,255,255,1) 0%, rgba(231,231,231,1) 100%)", }}>
                     {weekMeals[`week${activeTab}`]?.length > 0 ? (
                         weekMeals[`week${activeTab}`].map((meal: any) => (
                             <Grid item xs={12} sm={6} md={4} lg={3} key={meal.id}>
-                                <Card sx={{ position: "relative" }}>
-                                    <CardMedia component="img" height="140" image={meal.image} alt={meal.name} />
-                                    <CardContent>
-                                        <Typography variant="h6">{meal.name}</Typography>
-                                        <Typography variant="body2" color="text.secondary">{meal.description}</Typography>
+                                <Card sx={{ position: "relative", padding: "20px", borderRadius: "20px" }}>
+                                    <CardMedia className="rounded-lg" component="img" height="140" image={meal.image} alt={meal.name} />
 
-                                        <IconButton sx={{ position: "absolute", top: 8, right: 8 }} onClick={() => handleDeleteMeal(`week${activeTab}`, meal.id)} color="error">
+
+
+                                    <CardContent>
+                                        <h2 className="text-xl font-bold ">{meal.name}</h2>
+                                        <p color="text.secondary" className=" mt-4">{meal.instructions.join(" ").slice(0, 300)}...</p>
+                                        <div className="flex items-center justify-between w-full mt-3">
+                                            <div className="flex items-center gap-2">
+                                                <span className="font-semibold">Cuisine:</span>
+                                                <span>{meal.cuisine}</span>
+                                            </div>
+                                            <div className="flex items-center gap-2">
+                                                <span className="font-semibold">Ratings:</span>
+                                                <span>{meal.rating}</span>
+                                            </div>
+                                        </div>
+                                        <IconButton sx={{ position: "absolute", padding: 0, top: 8, right: 4 }} onClick={() => handleDeleteMeal(`week${activeTab}`, meal.id)} color="error">
                                             <DeleteIcon />
                                         </IconButton>
                                     </CardContent>
